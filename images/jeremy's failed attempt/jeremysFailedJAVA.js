@@ -1,71 +1,60 @@
-//	<!-- Final Group Push -->
-//
-// var apple = {name: "Apple", marketPrice: 3};
-// var grape = {name: "Grape", marketPrice: 7};
-// var banana = {name: "Banana", marketPrice: 8};
-// var orange = {name: "Orange", marketPrice: 4};
-// var pears = {name: "Pears", marketPrice: 4};
-// var starfruit = {name: "Starfruit", marketPrice: 4};
-// var fruitArray = [apple, orange, banana];
-// var totalOwned = 0;
-// var priceBought = 0;
-// var averagePrice = 0;
-// var averagePriceTotal = 0;
-// var priceTotal = 0;
-// var totalAvailableCash = 100;
-// var randomNumberResult = parseFloat((randomNumber(-2.5, 2.5)/10)); // todo:.round(2));
-//
-// function FruitBuilder(name, marketPrice,totalOwned,averagePrice,priceBought, priceTotal){
-// 	this.name = name;
-// 	this.marketPrice = marketPrice;
-// 	this.totalOwned = totalOwned; // q
-// 	this.averagePrice = averagePrice;
-// 	this.priceBought = priceBought;
-// 	this.priceTotal = priceTotal;
-// };
 var apple = {name: "Apple", marketPrice: 3};
 var grape = {name: "Grape", marketPrice: 7};
 var banana = {name: "Banana", marketPrice: 8};
 var orange = {name: "Orange", marketPrice: 4};
 var pears = {name: "Pears", marketPrice: 4};
 var starfruit = {name: "Starfruit", marketPrice: 4};
-var fruitArray = [apple, orange, banana, pears, starfruit];
-var bananaTotalOwned = 0;
-var bananaPriceBought = 0;
-var averageBananaPrice = 0;
-var bananaAveragePriceTotal = 0;
-var bananaPriceTotal = 0;
+
+var fruitArray = [apple, orange, banana];
+var totalOwned = 0;
+var priceBought = 0;
+var averagePrice = 0;
+var averagePriceTotal = 0;
+var priceTotal = 0;
 var totalAvailableCash = 100;
 
+function FruitBuilder(name, marketPrice,totalOwned,averagePrice,priceBought, priceTotal){
+	this.name = name;
+	this.marketPrice = marketPrice;
+	this.totalOwned = totalOwned;
+	this.averagePrice = averagePrice;
+	this.priceBought = priceBought;
+	this.priceTotal = priceTotal;
+}
+var apple = new FruitBuilder("Apple", 3, 0, 0, 0,0);
+console.log(apple);
 $(document).ready(function(){
 	console.log('jQuery is sourced');
 
 	// Fruit Market Fluctating Price
 	// TODO: Need 15 seconds
-	$('#marketBananaPrice').text(banana.marketPrice += randomNumberResult);
+	$('#marketBananaPrice').text(this.marketPrice += randomNumberResult);
 
 	// not allowed to go below a cost of 50 cents, or above the cost of 9 dollars and 99
 	// setTimeout(function(){ parseFloat($('#marketBananaPrice').text(banana.marketPrice += randomNumberResult)); }, 1500);
+// fruitArray.forEach();
+setInterval(function(){
+for (var i = 0; i < fruitArray.length; i++) {
+ 	var randomNumberResult = parseFloat(randomNumber(-2.5, 2.5)/10);
+ 	parseFloat($('#market' + (fruitArray[i].name) + 'Price').text((fruitArray[i].marketPrice += randomNumberResult).toFixed(2)));
+}
+}, 1500);
 
-
-	setInterval(function(){
-		for (var i = 0; i < fruitArray.length; i++) {
-		var randomNumberResult = parseFloat(randomNumber(-2.5, 2.5)/10);
-		parseFloat($('#marketBananaPrice').text((banana.marketPrice += randomNumberResult).toFixed(2)));
-};
-	}, 1500);
 	// $(randomNumberResult).empty();
 	$('button').on('click', function() {
-		bananaTotalOwned++;
-		bananaPriceTotal += banana.marketPrice;
-		bananaAveragePriceTotal= bananaPriceTotal / bananaTotalOwned;
-		$('#averageBananaPrice').text(bananaAveragePriceTotal.toFixed(2));
-		totalAvailableCash = $('#totalAvailableCash').text();
-		totalAvailableCash -= banana.marketPrice;
-		$('#totalAvailableCash').text(totalAvailableCash.toFixed(2));
-		$('#boughtBananas').text(bananaTotalOwned); // we ha
 
-		if (totalAvailableCash < banana.marketPrice) { // disable button function
+		totalOwned++;
+		priceTotal +=apple.marketPrice;
+		averagePriceTotal= priceTotal / totalOwned;
+		$('#averageApplePrice').text((apple).priceTotal.toFixed(2));
+		totalAvailableCash = $('#totalAvailableCash').text();
+		totalAvailableCash -= apple.marketPrice;
+		$('#totalAvailableCash').text(totalAvailableCash.toFixed(2));
+		$('#boughtApples').text(totalOwned); // we ha
+
+		if (totalAvailableCash < this.marketPrice) { // disable button function
+
+
 
 	  // $('button').on('click', function() {
 		//
