@@ -4,7 +4,7 @@ var banana = {name: "Banana", marketPrice: 8};
 var orange = {name: "Orange", marketPrice: 4};
 var pears = {name: "Pears", marketPrice: 4};
 var starfruit = {name: "Starfruit", marketPrice: 4};
-var fruitArray = [apple, orange, banana, pears, starfruit];
+var fruitArray = [apple, orange, banana];
 var bananaTotalOwned = 0;
 var bananaPriceBought = 0;
 var averageBananaPrice = 0;
@@ -21,16 +21,19 @@ $(document).ready(function(){
 
 	// not allowed to go below a cost of 50 cents, or above the cost of 9 dollars and 99
 	// setTimeout(function(){ parseFloat($('#marketBananaPrice').text(banana.marketPrice += randomNumberResult)); }, 1500);
+// fruitArray.forEach();
+setInterval(function(){
+for (var i = 0; i < fruitArray.length; i++) {
+ 	var randomNumberResult = parseFloat(randomNumber(-2.5, 2.5)/10);
+ 	parseFloat($('#market' + (fruitArray[i].name) + 'Price').text((fruitArray[i].marketPrice += randomNumberResult).toFixed(2)));
+}
+}, 1500);
 
-
-	setInterval(function(){
-		var randomNumberResult = parseFloat(randomNumber(-2.5, 2.5)/10);
-		parseFloat($('#marketBananaPrice').text((banana.marketPrice += randomNumberResult).toFixed(2)));
-	}, 1500);
 	// $(randomNumberResult).empty();
 	$('button').on('click', function() {
+
 		bananaTotalOwned++;
-		bananaPriceTotal += banana.marketPrice;
+		bananaPriceTotal += this.marketPrice;
 		bananaAveragePriceTotal= bananaPriceTotal / bananaTotalOwned;
 		$('#averageBananaPrice').text(bananaAveragePriceTotal.toFixed(2));
 		totalAvailableCash = $('#totalAvailableCash').text();
@@ -39,6 +42,8 @@ $(document).ready(function(){
 		$('#boughtBananas').text(bananaTotalOwned); // we ha
 
 		if (totalAvailableCash < banana.marketPrice) { // disable button function
+
+
 
 	  // $('button').on('click', function() {
 		//
