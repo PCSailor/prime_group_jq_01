@@ -1,120 +1,86 @@
-//	<!-- Final Group Push -->
-//
-// var apple = {name: "Apple", marketPrice: 3};
-// var grape = {name: "Grape", marketPrice: 7};
-// var banana = {name: "Banana", marketPrice: 8};
-// var orange = {name: "Orange", marketPrice: 4};
-// var pears = {name: "Pears", marketPrice: 4};
-// var starfruit = {name: "Starfruit", marketPrice: 4};
-// var fruitArray = [apple, orange, banana];
-// var totalOwned = 0;
-// var priceBought = 0;
-// var averagePrice = 0;
-// var averagePriceTotal = 0;
-// var priceTotal = 0;
-// var totalAvailableCash = 100;
-// var randomNumberResult = parseFloat((randomNumber(-2.5, 2.5)/10)); // todo:.round(2));
-//
-// function FruitBuilder(name, marketPrice,totalOwned,averagePrice,priceBought, priceTotal){
-// 	this.name = name;
-// 	this.marketPrice = marketPrice;
-// 	this.totalOwned = totalOwned; // q
-// 	this.averagePrice = averagePrice;
-// 	this.priceBought = priceBought;
-// 	this.priceTotal = priceTotal;
-// };
-var apple = {name: "Apple", marketPrice: 3};
-var grape = {name: "Grape", marketPrice: 7};
-var banana = {name: "Banana", marketPrice: 8};
-var orange = {name: "Orange", marketPrice: 4};
-var pears = {name: "Pears", marketPrice: 4};
-var starfruit = {name: "Starfruit", marketPrice: 4};
-var fruitArray = [apple, orange, banana, pears, starfruit];
-var bananaTotalOwned = 0;
-var bananaPriceBought = 0;
-var averageBananaPrice = 0;
-var bananaAveragePriceTotal = 0;
-var bananaPriceTotal = 0;
-var totalAvailableCash = 100;
+var fruitArray = ["Apples", "Oranges", "Bananas", "Grapes", "Kiwis"];
+// everything buoilt to work off one array
+
+// NOTE:  Game Settings Area:
+var startingPrice = 5.00; // whole numbers = dollarsz  //magic number
+// var minSwing = 0.01;
+// var maxSwing = 0.50;
+// var minPrice = 0.50;
+// var maxPrice = 9.99; // not getting desired result
+
+var minSwing = 1; // NOTE: Whole numbers = cents
+var maxSwing = 50; // NOTE: Whole numbers = cents
+var minPrice = 0.50;
+var maxPrice = 9.99;
+
+// NOTE:  Game Settings Area END
+function Fruit (name, price) {
+	this.name = name;
+	this.price = price;
+	this.changePrice = function(){
+		console.log("Tots works");
+		console.log(this.price);
+		var priceSwing = randomNumber(minSwing, maxSwing);
+		var randomAdjustment = randomNumber(1,2);
+		if(randomAdjustment == 1){
+		priceSwing = -priceSwing;
+	} else { priceSwing = priceSwing}
+		priceSwing = priceSwing/100;
+		this.price += priceSwing;
+			console.log(this.price);
+	};
+}
+// var testFruit = new Fruit (fruitArray [0], 65); // test
 
 $(document).ready(function(){
-	console.log('jQuery is sourced');
-
-	// Fruit Market Fluctating Price
-	// TODO: Need 15 seconds
-	$('#marketBananaPrice').text(banana.marketPrice += randomNumberResult);
-
-	// not allowed to go below a cost of 50 cents, or above the cost of 9 dollars and 99
-	// setTimeout(function(){ parseFloat($('#marketBananaPrice').text(banana.marketPrice += randomNumberResult)); }, 1500);
-
-
-	setInterval(function(){
-		for (var i = 0; i < fruitArray.length; i++) {
-		var randomNumberResult = parseFloat(randomNumber(-2.5, 2.5)/10);
-		parseFloat($('#marketBananaPrice').text((banana.marketPrice += randomNumberResult).toFixed(2)));
-};
-	}, 1500);
-	// $(randomNumberResult).empty();
-	$('button').on('click', function() {
-		bananaTotalOwned++;
-		bananaPriceTotal += banana.marketPrice;
-		bananaAveragePriceTotal= bananaPriceTotal / bananaTotalOwned;
-		$('#averageBananaPrice').text(bananaAveragePriceTotal.toFixed(2));
-		totalAvailableCash = $('#totalAvailableCash').text();
-		totalAvailableCash -= banana.marketPrice;
-		$('#totalAvailableCash').text(totalAvailableCash.toFixed(2));
-		$('#boughtBananas').text(bananaTotalOwned); // we ha
-
-		if (totalAvailableCash < banana.marketPrice) { // disable button function
-
-	  // $('button').on('click', function() {
-		//
-		// });
-	}
-	}) // End of button click function
+	// console.log('jQuery is sourced');
+init();
 
 }); // NOTE: FOR: $(document).ready(function(){
+// console.log('Javascript is sourced');
 
-	// Addition of all the marketprice clicks divi
-	console.log('Javascript is sourced');
+function init () { // will start the game when this is called
+buildFruits(fruitArray);
+buildDomFruits(fruitArray);
+// setInterval(gameInterval, 1000); // delete for Function enable/disable
+enable();
+}
 
+function enable(){
+setInterval(gameInterval);
+}
 
+function disable(){
+clearInterval(gameInterval);
+}
 
-	function randomNumber(min, max) {
-		return Math.floor(Math.random() * (1 + max - min) + min); }
+function gameInterval (){
+for (var i = 0; i < fruitArray.length; i++) {
+	fruitArray[i].changePrice();
+	// console.log(array[i].name, fruitArray[i].price);
+}
+}
 
-		// market price fluctuate up or down 50 cents (between 1 cent and 50 cents)-15 second interval.
+function buildFruits (array){
+	// console.log(array);
+for (var i = 0; i < array.length; i++) {
+	var newFruit = new Fruit(array[i], startingPrice);
+	array[i] = newFruit;
+	newFruit.changePrice();
+}
+// console.log(array);
+}
 
-		var randomNumberResult = parseFloat((randomNumber(-2.5, 2.5)/10)); // todo:.round(2));
+function buildDomFruits (array){ // update the DOM with objects in array
+console.log(array);
+for (var i = 0; i < array.length; i++) {
+	$("#fruitContainer").append("<div></div");
+	var $el = $("#fruitContainer").children().last();
+	$el.append("<p>" + array[i].name + "</p>");
+	$el.append("<p>" + array[i].price + "</p>");
+}
+console.log(array);
+}
 
-
-
-
-		// if (0.50 <= marketPrice) {
-		//
-		// }
-		//
-		// else  (9.99
-		// }
-		//
-
-
-
-
-		// When the application loads,
-		// name
-		// market price
-
-		// displayed in a meaningful way on the DOM.
-		//
-		// Every 15 seconds, the prices should change however, and with it, the listed price on the DOM.
-
-		// Clicking fruit display, buys the fruits-at market price-deducted from the total cash.
-		//
-		// user display
-		// $100
-		// total
-		// inventory
-		// purchased fruits
-		// average purchased fruit price-how much money-spent on a given fruit in inventory
-		// The user is not allowed to spend more than they have.
+function randomNumber(min, max) {
+	return Math.floor(Math.random() * (1 + max - min) + min); }
